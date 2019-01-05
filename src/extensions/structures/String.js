@@ -19,8 +19,8 @@ String.prototype.upperString = function() {
 String.prototype.codeBlock = function() {
   return `\`\`\`${this}\`\`\``;
 };
-String.prototype.mention = function () {
-  return '<@' + this + '>';
+String.prototype.mention = function() {
+  return `<@${this}>`;
 };
 String.prototype.capitalizeWords = function() {
   if (isNaN(this))

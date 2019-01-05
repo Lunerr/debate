@@ -28,7 +28,7 @@ module.exports = async client => {
       let anyAuto = false;
 
       for (let j = 0; j < messagesArray.length; j++) {
-        if (debates.get(messagesArray[j]) !== undefined)
+        if (!debates.get(messagesArray[j]))
           anyAuto = true;
       }
 
@@ -39,11 +39,12 @@ module.exports = async client => {
 
       const onlineFor = topic.for.filter(x => {
         const user = client.users.get(x);
+
         return user && user.presence.status === "online";
       });
-
-      const onlineAgainst = topic.for.filter(x => {
+      const onlineAgainst = topic.against.filter(x => {
         const user = client.users.get(x);
+
         return user && user.presence.status === "online";
       });
 
@@ -53,83 +54,98 @@ module.exports = async client => {
       if (topic.statements.length <= 0)
         continue;
 
-      const getStatement = Random.arrayElement(topic.statements);
-      const position = getStatement.position;
-      const statement = getStatement.statement
+      const statement = Random.arrayElement(topic.statements);
 
-      const debateMessage = await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`, 
+      const debateMessage = await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
         {footer: {text: "Up to 3 random people will be selected to debate your stance."}});
 
       debates.set(debateMessage.id, Date.now());
 
-      const reply = await channel.awaitMessages(m => m.content.lowerString() === "agree" || m.content.lowerString() === "disagree", { max: 1, time: 60000 });
+      const reply = await channel.awaitMessages(m => m.content.lowerString() === "agree" || m.content.lowerString() === "disagree", {
+        max: 1, time: 60000
+      });
 
       if (reply.size >= 1) {
         const content = reply.first().content.lowerString();
         let opponents;
-        let opponentsArray = [];
-        let opponentsString = '';
+        const opponentsArray = [];
+        let opponentsString = "";
         let l;
 
-        if (position === "for") {
+        if (statement.position === "for") {
           if (content === "agree") {
             opponents = topic.against.filter(x => {
               const user = client.users.get(x);
+
               return user && user.presence.status === "online";
             });
 
             const len = opponents.length > 3 ? 3 : opponents.length;
 
             for (l = 0; l < len; l++) {
-              opponentsArray.push(client.users.get(Random.arrayElement(opponents)));
+              const randomUser = Random.arrayElement(opponents);
+
+              opponentsArray.push(client.users.get(randomUser));
+              opponentsArray.pull(randomUser);
             }
           }
 
           if (content === "disagree") {
             opponents = topic.for.filter(x => {
               const user = client.users.get(x);
+
               return user && user.presence.status === "online";
             });
 
             const len = opponents.length > 3 ? 3 : opponents.length;
 
             for (l = 0; l < len; l++) {
-              opponentsArray.push(client.users.get(Random.arrayElement(opponents)));
+              const randomUser = Random.arrayElement(opponents);
+
+              opponentsArray.push(client.users.get(randomUser));
+              opponentsArray.pull(randomUser);
             }
           }
-        } else if (position === "against") {
+        } else if (statement.position === "against") {
           if (content === "agree") {
             opponents = topic.for.filter(x => {
               const user = client.users.get(x);
+
               return user && user.presence.status === "online";
             });
 
             const len = opponents.length > 3 ? 3 : opponents.length;
 
             for (l = 0; l < len; l++) {
-              opponentsArray.push(client.users.get(Random.arrayElement(opponents)));
+              const randomUser = Random.arrayElement(opponents);
+
+              opponentsArray.push(client.users.get(randomUser));
+              opponentsArray.pull(randomUser);
             }
           }
 
           if (content === "disagree") {
             opponents = topic.against.filter(x => {
               const user = client.users.get(x);
+
               return user && user.presence.status === "online";
             });
 
             const len = opponents.length > 3 ? 3 : opponents.length;
 
             for (l = 0; l < len; l++) {
-              opponentsArray.push(client.users.get(Random.arrayElement(opponents)));
+              const randomUser = Random.arrayElement(opponents);
+
+              opponentsArray.push(client.users.get(randomUser));
+              opponentsArray.pull(randomUser);
             }
           }
         }
 
-        for (let s = 0; s < opponentsArray.length; s++) {
-          opponentsString += opponentsArray[s].toString() + ', ';
-        }
+        for (let s = 0; s < opponentsArray.length; s++)
+          opponentsString += `${opponentsArray[s].toString()}, `;
 
-        await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n\n
+        await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n\n
           **1.** No ad hominems. Don't attack the person, attack the point.\n\n
           **2.** No straw men. Don't misrepresent someone's argument to then knock down the straw man. "So you're saying..." is typically a straw man argument.\n\n
           **3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.\n\n

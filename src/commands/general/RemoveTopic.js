@@ -1,5 +1,4 @@
 const patron = require("patron.js");
-const debate = require("../../structures/debate.js");
 
 class RemoveTopic extends patron.Command {
   constructor() {
@@ -20,7 +19,7 @@ class RemoveTopic extends patron.Command {
   async run(msg, args) {
     if (!msg.member.hasPermission("MANAGE_MESSAGES"))
       return msg.createErrorReply("you must be a mod to use this cmd.");
-  
+
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$pull: {topics: args.topic}});
 
     return msg.createReply(`you've successfully removed topic ${args.topic.topic.boldify()}.`);

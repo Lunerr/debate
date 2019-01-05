@@ -15,12 +15,16 @@ class Statistics extends patron.Command {
   async run(msg) {
     const uptime = NumberUtil.msToTime(msg.client.uptime);
     let users = 0;
+    let authors = "";
 
     for (const guild of msg.client.guilds.values())
       users += guild.memberCount;
 
+    for (let i = 0; i < Constants.data.misc.ownerIds.length; i++)
+      authors += `${msg.client.users.get(Constants.data.misc.ownerIds[i]).tag}\n`;
+
     await msg.author.DMFields(["Authors",
-      Constants.data.misc.botOwners.join("\n"),
+      authors,
       "Framework",
       "patron.js",
       "Memory",

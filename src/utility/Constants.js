@@ -4,8 +4,7 @@ class Constants {
       colors: {
         ban: [234, 12, 0],
         clear: [0, 29, 255],
-        defaults: [
-          [255, 38, 154],
+        defaults: [[255, 38, 154],
           [0, 255, 0],
           [0, 232, 40],
           [8, 248, 255],
@@ -15,8 +14,7 @@ class Constants {
           [255, 190, 17],
           [41, 84, 255],
           [150, 36, 237],
-          [168, 237, 0]
-        ],
+          [168, 237, 0]],
         chill: [255, 92, 17],
         error: [255, 0, 0],
         kick: [232, 81, 31],
@@ -56,7 +54,7 @@ class Constants {
         },
         game: ";help",
         prefix: ";",
-        botOwners: ["Luner#0059"],
+        botOwners: ["cesvy#0059"],
         ownerIds: ["226736342745219072"]
       },
 

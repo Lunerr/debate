@@ -20,7 +20,7 @@ class AddTopic extends patron.Command {
   async run(msg, args) {
     if (!msg.member.hasPermission("MANAGE_MESSAGES"))
       return msg.createErrorReply("you must be a mod to use this cmd.");
-    
+
     if (msg.dbGuild.topics.find(x => x.topic.lowerString() === args.topic.lowerString()))
       return msg.createErrorReply("there's already a debate with this topic.");
 
