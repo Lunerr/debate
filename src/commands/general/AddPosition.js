@@ -45,7 +45,7 @@ class AddPosition extends patron.Command {
 
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {[topic]: statementObj}});
 
-    return msg.createReply(`you've successfully added a statement ${args.statement.boldify()} with the position ${args.position.boldify()} on the topic ${args.topic.topic.boldify()}.`);
+    return msg.createReply(`you've successfully added a statement ${args.position.boldify()} ${args.topic.topic.boldify()}.`);
   }
 }
 module.exports = new AddPosition();
