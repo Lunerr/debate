@@ -1,0 +1,9 @@
+80 line eslint
+async arrow function has too many lines (61). Maximum allowed is 50  max-lines-per-function (message.js)
+Blocks are nested too deeply (4)  max-depth
+Unexpected negated condition 				       no-negated-condition
+Arrow function used ambiguously with a conditional expression  no-confusing-arrow
+Use the rest parameters instead of 'arguments'                 prefer-rest-params
+Unexpected mix of '*' and '+'  no-mixed-operators
+
+disable dm notifs
