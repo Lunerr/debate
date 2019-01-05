@@ -22,7 +22,7 @@ module.exports = async client => {
       const messages = await channel.messages.fetch({limit: 20});
       const messagesArray = messages.array();
 
-      if (messagesArray[0].createdTimestamp + 30000 > Date.now())
+      if (messagesArray[0].createdTimestamp + 60000 > Date.now())
         continue;
 
       let anyAuto = false;
@@ -37,7 +37,17 @@ module.exports = async client => {
 
       const topic = Random.arrayElement(guilds[i].topics);
 
-      if (topic.for.length <= 0 || topic.against.length <= 0)
+      const onlineFor = topic.for.filter(x => {
+        const user = client.users.get(x);
+        return user && user.presence.status === "online";
+      });
+
+      const onlineAgainst = topic.for.filter(x => {
+        const user = client.users.get(x);
+        return user && user.presence.status === "online";
+      });
+
+      if (onlineFor.length <= 0 || onlineAgainst.length <= 0)
         continue;
 
       if (topic.statements.length <= 0)

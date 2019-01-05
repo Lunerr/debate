@@ -12,5 +12,6 @@ proper ;cmds
 subscribe/ideologies
 proper help message
 dm on join
+fix indexes
 
 ;positions <topic>

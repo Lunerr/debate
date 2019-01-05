@@ -3,7 +3,7 @@ const patron = require("patron.js");
 class For extends patron.Command {
   constructor() {
     super({
-      names: ["for"],
+      names: ["for", "agree"],
       groupName: "general",
       description: "Go for a topic.",
       args: [new patron.Argument({

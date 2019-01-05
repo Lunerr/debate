@@ -3,7 +3,7 @@ const patron = require("patron.js");
 class Against extends patron.Command {
   constructor() {
     super({
-      names: ["against"],
+      names: ["against", "disagree"],
       groupName: "general",
       description: "Go against a topic.",
       args: [new patron.Argument({
