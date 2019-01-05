@@ -8,3 +8,7 @@ Unexpected mix of '*' and '+'  no-mixed-operators
 
 disable dm notifs
 Debate info cmd
+proper ;cmds
+subscribe/ideologies
+proper help message
+dm on join
