@@ -36,7 +36,6 @@ module.exports = async client => {
         continue;
 
       const topic = Random.arrayElement(guilds[i].topics);
-
       const onlineFor = topic.for.filter(x => {
         const user = client.users.get(x);
 
@@ -55,7 +54,6 @@ module.exports = async client => {
         continue;
 
       const statement = Random.arrayElement(topic.statements);
-
       const debateMessage = await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
         {footer: {text: "Up to 3 random people will be selected to debate your stance."}});
 
