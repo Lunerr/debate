@@ -7,3 +7,4 @@ Use the rest parameters instead of 'arguments'                 prefer-rest-param
 Unexpected mix of '*' and '+'  no-mixed-operators
 
 disable dm notifs
+Debate info cmd

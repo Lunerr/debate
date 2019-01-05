@@ -15,41 +15,22 @@ class RemovePosition extends patron.Command {
       new patron.Argument({
         name: "statement",
         key: "statement",
-        type: "string",
-        example: "The government controlling the means of production results inefficiency and waste, slowing innovation.",
+        type: "statement",
+        example: "a statement.",
         remainder: true
       })]
     });
   }
 
   async run(msg, args) {
-    const statements = Object.keys(args.topic.statements);
-    let statement;
+    if (!msg.member.hasPermission("MANAGE_MESSAGES"))
+      return msg.createErrorReply("you must be a mod to use this cmd.");
 
-    for (let i = 0; i < statements.length; i++) {
-      console.log(statements[i]);
-      if (statements[i] === args.statement) {
-        statement = statements[i];
-      }
-    }
+    const topic = `topics.${args.topic.index - 1}.statements`;
 
-    console.log(statement);
+    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$pull: {[topic]: args.statement}});
 
-    if (!statement)
-      return msg.createErrorReply("this statement does not exist.");
-
-    const index = args.topic.statements.indexOf(statement)
-
-    console.log(statement);
-
-    if (index < 0)
-      return msg.createErrorReply("this statement does not exist.");
-
-    const topicDB = `topics.${args.topic.index - 1}.statements`;
-
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {[topicDB]: index}});
-
-    return msg.createReply(`you've successfully removed statement ${args.statement.boldify()} from topic ${args.topic.topic.boldify()}.`);
+    return msg.createReply(`you've successfully removed statement ${args.statement.statement.boldify()} from topic ${args.topic.topic.boldify()}.`);
   }
 }
 module.exports = new RemovePosition();

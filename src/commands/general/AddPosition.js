@@ -3,7 +3,7 @@ const patron = require("patron.js");
 class AddPosition extends patron.Command {
   constructor() {
     super({
-      names: ["addposition", "setposition"],
+      names: ["addposition", "setposition", "addstatement", "setstatement"],
       groupName: "general",
       description: "Add a position to a topic.",
       args: [new patron.Argument({
@@ -22,25 +22,30 @@ class AddPosition extends patron.Command {
         name: "statement",
         key: "statement",
         type: "string",
-        example: "The government controlling the means of production results inefficiency and waste, slowing innovation.",
+        example: "a statement.",
         remainder: true
       })]
     });
   }
 
   async run(msg, args) {
+    if (!msg.member.hasPermission("MANAGE_MESSAGES"))
+      return msg.createErrorReply("you must be a mod to use this cmd.");
+
     if (args.position.lowerString() !== "for" && args.position.lowerString() !== "against")
       return msg.createErrorReply("this is an invalid position.");
 
-    const statementObj = {};
-
-    statementObj[args.statement] = {position: args.position};
+    const statementObj = {
+      index: args.topic.statements.length + 1,
+      statement: args.statement,
+      position: args.position.lowerString()
+    };
 
     const topic = `topics.${args.topic.index - 1}.statements`;
 
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {[topic]: statementObj}});
 
-    return msg.createReply(`you've successfully added statement ${args.statement.boldify()} with the position ${args.position.boldify()} on topic ${args.topic.topic.boldify()}.`);
+    return msg.createReply(`you've successfully added a statement ${args.statement.boldify()} with the position ${args.position.boldify()} on the topic ${args.topic.topic.boldify()}.`);
   }
 }
 module.exports = new AddPosition();

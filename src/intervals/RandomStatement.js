@@ -32,8 +32,6 @@ module.exports = async client => {
           anyAuto = true;
       }
 
-      console.log(anyAuto);
-
       if (anyAuto)
         continue;
 
@@ -46,8 +44,8 @@ module.exports = async client => {
         continue;
 
       const getStatement = Random.arrayElement(topic.statements);
-      const position = Object.values(getStatement)[0].position;
-      const statement = Object.keys(getStatement)[0];
+      const position = getStatement.position;
+      const statement = getStatement.statement
 
       const debateMessage = await channel.createMessage(`**${topic.topic} Debate**\n\n__STATEMENT:__\n${statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`, 
         {footer: {text: "Up to 3 random people will be selected to debate your stance."}});
@@ -128,7 +126,7 @@ module.exports = async client => {
           **May the most reasonable man win!**`);
         await channel.send(`${reply.first().author} VS ${opponentsString.substring(0, opponentsString.length - 2)}!`);
       } else {
-        await channel.createMessage("Nobody has replied and the debate has been abandoned.");
+        debateMessage.delete();
       }
     }
   }, 5000);

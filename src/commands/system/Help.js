@@ -33,7 +33,7 @@ class Help extends patron.Command {
     } else {
       args.command = args.command.startsWith(Constants.data.misc.prefix) ? args.command.slice(Constants.data.misc.prefix.length) : args.command;
 
-      const lowerInput = args.command.tolowerString();
+      const lowerInput = args.command.lowerString();
       const command = msg.client.registry.commands.find(x => x.names.some(y => y === lowerInput));
 
       if (!command)

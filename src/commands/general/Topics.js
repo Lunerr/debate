@@ -15,10 +15,10 @@ class Topics extends patron.Command {
     let message = "";
 
     if (topics.length <= 0)
-      return msg.createErrorReply("there's currently no active toics in this server.");
+      return msg.createErrorReply("there's currently no active topics in this server.");
 
     for (let i = 0; i < topics.length; i++) {
-      message += `**${topics[i].index}.** ${topics[i].topic}\n\n`;  
+      message += `**${topics[i].index + 1}.** ${topics[i].topic}\n\n`;  
 
       if (i === 20) {
         await msg.author.tryDM(message, {title: "Debate Topics"});
