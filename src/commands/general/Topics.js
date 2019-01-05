@@ -11,7 +11,8 @@ class Topics extends patron.Command {
   }
 
   async run(msg) {
-    const topics = msg.dbGuild.topics.sort((a, b) => b.index - a.index);
+    const topics = msg.dbGuild.topics.sort((a, b) => a.index - b.index);
+    const topicNums = [20, 40, 60, 80, 100];
     let message = "";
 
     if (topics.length <= 0)
@@ -20,7 +21,7 @@ class Topics extends patron.Command {
     for (let i = 0; i < topics.length; i++) {
       message += `**${topics[i].index}.** ${topics[i].topic}\n\n`;  
 
-      if (i === 20) {
+      if (topicNums.includes(i)) {
         await msg.author.tryDM(message, {title: "Debate Topics"});
         await PromiseUtil.delay(2000);
         message = "";
