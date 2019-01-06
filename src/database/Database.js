@@ -12,9 +12,7 @@ class Database {
       Pull: require("./updates/PullUpdate.js"),
       Push: require("./updates/PushUpdate.js")
     };
-    this.models = {
-      Guild: require("./models/Guild.js")
-    };
+    this.models = {Guild: require("./models/Guild.js")};
   }
 
   async connect(connectionURL) {

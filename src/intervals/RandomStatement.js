@@ -58,31 +58,31 @@ module.exports = async client => {
 
         if (!topics[j].for.some(anyOnline) || !topics[j].against.some(anyOnline) || topics[j].statements.length === 0)
           continue;
-  
+
         const statement = Random.arrayElement(topics[j].statements);
         const debateMessage = await channel.createMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
           {footer: {text: "Up to 3 people with differing opinions will be selected to debate you."}});
-  
+
         debates.set(debateMessage.id, Date.now());
-  
+
         const reply = await channel.awaitMessages(m => m.content.toLowerCase() === "agree" || m.content.toLowerCase() === "disagree", {
           max: 1, time: Constants.data.statements.replyWait
         });
-  
+
         if (reply.size >= 1) {
           const content = reply.first().content.toLowerCase();
           let opponents = "";
-  
+
           if ((statement.position === "for" && content === "agree") || (statement.position === "against" && content === "disagree"))
             opponents += getOpponents(client, topics[j].against);
           else if ((statement.position === "against" && content === "agree") || (statement.position === "for" && content === "disagree"))
             opponents += getOpponents(client, topics[j].for);
-  
-          await channel.createMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n
-            **1.** No ad hominems. Don't attack the person, attack the point.\n
-            **2.** No straw men. Don't misrepresent someone's argument to then knock down the straw man. "So you're saying..." is typically a straw man argument.\n
-            **3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.\n
-            **May the most reasonable man win!**`);
+
+          await channel.createMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n`
+            + "**1.** No ad hominems. Don't attack the person, attack the point.\n"
+            + "**2.** No straw men. Don't misrepresent someone's argument to then knock down the straw man. \"So you're saying...\" is typically a straw man argument.\n"
+            + "**3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.\n"
+            + "**May the most reasonable man win!**");
           await channel.send(`${reply.first().author} VS ${opponents.substring(0, opponents.length - 2)}!`);
         } else {
           debateMessage.delete();
