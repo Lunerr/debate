@@ -42,11 +42,11 @@ module.exports = async client => {
       const messages = await channel.messages.fetch({limit: Constants.data.statements.previousMessagesCount});
       const messagesArray = messages.array();
 
-      /*if (messagesArray[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
+      if (messagesArray[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
         continue;
 
       if (messagesArray.every(x => debates.has(x)))
-        continue;*/
+        continue;
 
       const topics = Random.shuffle(guilds[i].topics);
 
