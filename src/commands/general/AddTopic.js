@@ -1,5 +1,5 @@
 const patron = require("patron.js");
-const Debate = require("../../structures/Debate.js");
+const Debate = require("../../structures/debate.js");
 
 class AddTopic extends patron.Command {
   constructor() {
