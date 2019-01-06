@@ -2,19 +2,16 @@ const Discord = require("discord.js");
 const Constants = require("../utility/Constants.js");
 const Logger = require("../utility/Logger.js");
 const NumberUtil = require("../utility/NumberUtil.js");
-const client = require("../structures/Client.js");
+const client = require("../singletons/client.js");
 const patron = require("patron.js");
-const handler = require("../structures/handler.js");
+const handler = require("../singletons/handler.js");
 const CONTEXTS = {
   [patron.Context.Guild]: "server",
   [patron.Context.DM]: "DMs"
 };
 
 client.on("message", async msg => {
-  if (msg.author.bot || await msg.client.db.blacklistRepo.anyBlacklist(msg.author.id))
-    return;
-
-  if (!Constants.data.regexes.prefix.test(msg.content))
+  if (msg.author.bot || !Constants.data.regexes.prefix.test(msg.content))
     return;
 
   if (msg.guild)

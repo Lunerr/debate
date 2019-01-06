@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 const Constants = require("../utility/Constants.js");
-const registry = require("../structures/registry.js");
+const registry = require("../singletons/registry.js");
 const Database = require("../database/Database.js");
 
 class Client extends discord.Client {

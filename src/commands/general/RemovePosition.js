@@ -26,7 +26,7 @@ class RemovePosition extends patron.Command {
     if (!msg.member.hasPermission("MANAGE_MESSAGES"))
       return msg.createErrorReply("you must be a mod to use this cmd.");
 
-    const topic = `topics.${args.topic.index - 1}.statements`;
+    const topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.statements`;
 
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$pull: {[topic]: args.statement}});
 

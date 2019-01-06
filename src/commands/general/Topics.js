@@ -11,7 +11,7 @@ class Topics extends patron.Command {
   }
 
   async run(msg) {
-    const topics = msg.dbGuild.topics.sort((a, b) => a.index - b.index);
+    const topics = msg.dbGuild.topics;
     const topicNums = [20,
       40,
       60,
@@ -34,7 +34,7 @@ class Topics extends patron.Command {
 
     await msg.author.tryDM(message, {title: "Debate Topics"});
 
-    return msg.createReply(`you have been DMed with all ${msg.guild.name} topics.`);
+    return msg.createReply(`you have been DMed with all ${msg.guild.name.boldify()} topics.`);
   }
 }
 

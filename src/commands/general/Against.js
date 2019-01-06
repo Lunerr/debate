@@ -23,11 +23,11 @@ class Against extends patron.Command {
     let topic = "";
 
     if (args.topic.for.includes(msg.author.id)) {
-      topic = `topics.${args.topic.index - 1}.for`;
+      topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.for`;
       await msg.client.db.guildRepo.updateGuild(msg.guild.id, {$pull: {[topic]: msg.author.id}});
     }
 
-    topic = `topics.${args.topic.index - 1}.against`;
+    topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.against`;
     await msg.client.db.guildRepo.updateGuild(msg.guild.id, {$push: {[topic]: msg.author.id}});
 
     return msg.createReply(`you are now against the topic ${args.topic.topic.boldify()}.`);

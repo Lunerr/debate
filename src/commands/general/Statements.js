@@ -41,7 +41,7 @@ class Statements extends patron.Command {
 
     await msg.author.tryDM(message, {title: `${args.topic.topic} Statements`});
 
-    return msg.createReply(`you have been DMed with all ${args.topic.topic} statements.`);
+    return msg.createReply(`you have been DMed with all ${args.topic.topic.boldify()} statements.`);
   }
 }
 

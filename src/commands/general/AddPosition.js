@@ -40,7 +40,7 @@ class AddPosition extends patron.Command {
       statement: args.statement,
       position: args.position.toLowerCase()
     };
-    const topic = `topics.${args.topic.index - 1}.statements`;
+    const topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.statements`;
 
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {[topic]: statementObj}});
 
