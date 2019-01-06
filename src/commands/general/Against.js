@@ -33,4 +33,5 @@ class Against extends patron.Command {
     return msg.createReply(`you are now against the topic ${args.topic.topic.boldify()}.`);
   }
 }
+
 module.exports = new Against();

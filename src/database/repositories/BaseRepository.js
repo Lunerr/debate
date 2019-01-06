@@ -105,4 +105,5 @@ class BaseRepository {
     return this.findOneAndDelete(new IdQuery(id));
   }
 }
+
 module.exports = BaseRepository;

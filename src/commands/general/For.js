@@ -33,4 +33,5 @@ class For extends patron.Command {
     return msg.createReply(`you are now for the topic ${args.topic.topic.boldify()}.`);
   }
 }
+
 module.exports = new For();

@@ -40,4 +40,5 @@ class Statistics extends patron.Command {
       return msg.createReply(`you have been DMed with all ${msg.client.user.username} Statistics!`);
   }
 }
+
 module.exports = new Statistics();

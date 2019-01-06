@@ -13,5 +13,6 @@ subscribe/ideologies
 proper help message
 dm on join
 fix indexes
-
-;positions <topic>
+precondition for mod
+type reader for position
+don't pass around the client, just require it everywhere???

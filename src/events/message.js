@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const Constants = require("../utility/Constants.js");
-const RateLimitService = require("../services/RateLimitService.js");
 const Logger = require("../utility/Logger.js");
 const NumberUtil = require("../utility/NumberUtil.js");
 const client = require("../structures/Client.js");
@@ -15,15 +14,11 @@ client.on("message", async msg => {
   if (msg.author.bot || await msg.client.db.blacklistRepo.anyBlacklist(msg.author.id))
     return;
 
-  const inGuild = !msg.guild;
-
-  if (!inGuild)
-    msg.dbGuild = await client.db.guildRepo.getGuild(msg.guild.id);
-
   if (!Constants.data.regexes.prefix.test(msg.content))
     return;
 
-  await RateLimitService.initiate(msg);
+  if (msg.guild)
+    msg.dbGuild = await client.db.guildRepo.getGuild(msg.guild.id);
 
   const result = await handler.run(msg, Constants.data.misc.prefix.length);
 
@@ -31,9 +26,8 @@ client.on("message", async msg => {
     let message;
 
     switch (result.commandError) {
-    case patron.CommandError.CommandNotFound: {
+    case patron.CommandError.CommandNotFound:
       return;
-    }
     case patron.CommandError.Cooldown: {
       const cooldown = NumberUtil.msToTime(result.remaining);
 
@@ -62,10 +56,10 @@ client.on("message", async msg => {
       message = `you are incorrectly using this command.\n**Usage:** \`${Constants.data.misc.prefix}${result.command.getUsage()}\`\n**Example:** \`${Constants.data.misc.prefix}${result.command.getExample()}\``;
       break;
     default:
-      message = !result.errorReason.startsWith("I") ? result.errorReason[0].lowerString() + result.errorReason.slice(1) : result.errorReason;
+      message = !result.errorReason.startsWith("I") ? result.errorReason[0].toLowerCase() + result.errorReason.slice(1) : result.errorReason;
       break;
     }
-    Logger.log(`Unsuccessful command result: ${msg.id} User: ${msg.author.tag} User ID: ${msg.author.id} Guild: ${!inGuild ? msg.guild.name : "NA"} Content ${msg.cleanContent} | Reason: ${result.errorReason}`, "DEBUG");
+    Logger.log(`Unsuccessful command result: ${msg.id} User: ${msg.author.tag} User ID: ${msg.author.id} Guild: ${msg.guild ? msg.guild.name : "NA"} Content ${msg.cleanContent} | Reason: ${result.errorReason}`, "DEBUG");
 
     return msg.tryCreateErrorReply(message);
   }

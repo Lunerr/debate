@@ -3,4 +3,5 @@ class PullUpdate {
     this.$pull = {[property]: value};
   }
 }
+
 module.exports = PullUpdate;

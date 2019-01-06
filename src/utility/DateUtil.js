@@ -9,4 +9,5 @@ class DateUtil {
     return `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
   }
 }
+
 module.exports = new DateUtil();

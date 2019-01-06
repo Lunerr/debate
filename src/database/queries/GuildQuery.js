@@ -3,4 +3,5 @@ class GuildQuery {
     this.guildId = guildId;
   }
 }
+
 module.exports = GuildQuery;

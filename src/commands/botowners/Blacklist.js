@@ -25,4 +25,5 @@ class Blacklist extends patron.Command {
     return msg.createReply(`successfully blacklisted ${args.user.tag}.`);
   }
 }
+
 module.exports = new Blacklist();

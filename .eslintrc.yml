@@ -55,7 +55,6 @@ rules: {
   no-label-var: 2,
   no-lone-blocks: 2,
   no-lonely-if: 2,
-  no-loop-func: 2,
   no-multi-assign: 2,
   no-multi-spaces: 2,
   no-multiple-empty-lines: [2, {max: 1}],
@@ -99,121 +98,6 @@ rules: {
   operator-assignment: 2,
   operator-linebreak: [2, "before"],
   padded-blocks: [2, "never"],
-  padding-line-between-statements: [2, {
-    blankLine: "never",
-    next: "*",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "class",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "return",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "for",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "*",
-    prev: "for"
-  },
-  {
-    blankLine: "always",
-    next: "if",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "*",
-    prev: "if"
-  },
-  {
-    blankLine: "always",
-    next: "try",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "*",
-    prev: "try"
-  },
-  {
-    blankLine: "always",
-    next: "function",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "*",
-    prev: "function"
-  },
-  {
-    blankLine: "always",
-    next: "while",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "*",
-    prev: "while"
-  },
-  {
-    blankLine: "always",
-    next: "throw",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "class",
-    prev: "*"
-  },
-  {
-    blankLine: "always",
-    next: "block-like",
-    prev: "const"
-  },
-  {
-    blankLine: "always",
-    next: "expression",
-    prev: "const"
-  },
-  {
-    blankLine: "always",
-    next: "function",
-    prev: "const"
-  },
-  {
-    blankLine: "always",
-    next: "const",
-    prev: "expression"
-  },
-  {
-    blankLine: "always",
-    next: "block-like",
-    prev: "let"
-  },
-  {
-    blankLine: "always",
-    next: "expression",
-    prev: "let"
-  },
-  {
-    blankLine: "always",
-    next: "function",
-    prev: "let"
-  },
-  {
-    blankLine: "always",
-    next: "let",
-    prev: "expression"
-  }],
   prefer-arrow-callback: 2,
   prefer-const: 2,
   prefer-destructuring: 2,

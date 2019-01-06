@@ -25,4 +25,5 @@ class RemoveTopic extends patron.Command {
     return msg.createReply(`you've successfully removed topic ${args.topic.topic.boldify()}.`);
   }
 }
+
 module.exports = new RemoveTopic();

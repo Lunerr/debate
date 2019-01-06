@@ -1,5 +1,5 @@
 const patron = require("patron.js");
-const debate = require("../../structures/debate.js");
+const Debate = require("../../structures/Debate.js");
 
 class AddTopic extends patron.Command {
   constructor() {
@@ -21,14 +21,13 @@ class AddTopic extends patron.Command {
     if (!msg.member.hasPermission("MANAGE_MESSAGES"))
       return msg.createErrorReply("you must be a mod to use this cmd.");
 
-    if (msg.dbGuild.topics.find(x => x.topic.lowerString() === args.topic.lowerString()))
+    if (msg.dbGuild.topics.find(x => x.topic.toLowerCase() === args.topic.toLowerCase()))
       return msg.createErrorReply("there's already a debate with this topic.");
 
-    const index = msg.dbGuild.topics.length + 1;
-
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {topics: new debate(index, args.topic)}});
+    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {topics: new Debate(args.topic)}});
 
     return msg.createReply(`you've successfully created the topic ${args.topic.boldify()}.`);
   }
 }
+
 module.exports = new AddTopic();

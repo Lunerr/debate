@@ -30,4 +30,5 @@ class Database {
     await db.collection("guilds").createIndex("guildId", {unique: true});
   }
 }
+
 module.exports = Database;

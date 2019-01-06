@@ -33,4 +33,5 @@ class RemovePosition extends patron.Command {
     return msg.createReply(`you've successfully removed statement ${args.statement.statement.boldify()} from topic ${args.topic.topic.boldify()}.`);
   }
 }
+
 module.exports = new RemovePosition();

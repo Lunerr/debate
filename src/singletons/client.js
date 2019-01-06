@@ -1,9 +1,9 @@
-const {Client: _Client} = require("discord.js");
+const discord = require("discord.js");
 const Constants = require("../utility/Constants.js");
-const registry = require("./registry.js");
+const registry = require("../structures/registry.js");
 const Database = require("../database/Database.js");
 
-class Client extends _Client {
+class Client extends discord.Client {
   constructor(reg, db, options) {
     super(options);
     Object.defineProperty(this, "registry", {value: reg});
@@ -20,4 +20,5 @@ class Client extends _Client {
     }
   }
 }
+
 module.exports = new Client(registry, new Database(), Constants.data.misc.clientOptions);

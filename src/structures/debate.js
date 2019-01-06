@@ -1,10 +1,10 @@
 class Debate {
-  constructor(index, topic) {
-    this.index = index;
+  constructor(topic) {
     this.topic = topic;
     this.statements = [];
     this.for = [];
     this.against = [];
   }
 }
+
 module.exports = Debate;

@@ -1,25 +1,17 @@
 class NumberUtil {
-  static realValue(input) {
-    return input / 100;
-  }
-
-  static format(input) {
-    return (input / 100).USD();
-  }
-
-  static secondsToMs(input) {
+  secondsToMs(input) {
     return input * 1000;
   }
 
-  static hoursToMs(input) {
+  hoursToMs(input) {
     return input * 3600000;
   }
 
-  static daysToMs(input) {
+  daysToMs(input) {
     return input * 86400000;
   }
 
-  static msToTime(input) {
+  msToTime(input) {
     return {
       milliseconds: parseInt(input % 1000 / 100),
       seconds: parseInt(input / 1000 % 60),
@@ -29,7 +21,7 @@ class NumberUtil {
     };
   }
 
-  static pad(num, size) {
+  pad(num, size) {
     let s = num.toString();
 
     while (s.length < size)
@@ -38,8 +30,9 @@ class NumberUtil {
     return s;
   }
 
-  static round(num, dec) {
+  round(num, dec) {
     return typeof dec === "number" ? Number(num.toFixed(dec)) : Math.round(num);
   }
 }
-module.exports = NumberUtil;
+
+module.exports = new NumberUtil();

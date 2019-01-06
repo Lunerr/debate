@@ -22,4 +22,5 @@ class SetDebateChannel extends patron.Command {
     return msg.createReply(`you have successfully set the debate channel to ${args.channel.toString()}.`);
   }
 }
+
 module.exports = new SetDebateChannel();

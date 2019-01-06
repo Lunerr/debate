@@ -3,4 +3,5 @@ class IdQuery {
     this._id = id;
   }
 }
+
 module.exports = IdQuery;

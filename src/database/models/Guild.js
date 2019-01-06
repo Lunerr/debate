@@ -5,4 +5,5 @@ class Guild {
     this.debateChannel = null;
   }
 }
+
 module.exports = Guild;

@@ -32,13 +32,13 @@ class AddPosition extends patron.Command {
     if (!msg.member.hasPermission("MANAGE_MESSAGES"))
       return msg.createErrorReply("you must be a mod to use this cmd.");
 
-    if (args.position.lowerString() !== "for" && args.position.lowerString() !== "against")
+    if (args.position.toLowerCase() !== "for" && args.position.toLowerCase() !== "against")
       return msg.createErrorReply("this is an invalid position.");
 
     const statementObj = {
       index: args.topic.statements.length + 1,
       statement: args.statement,
-      position: args.position.lowerString()
+      position: args.position.toLowerCase()
     };
     const topic = `topics.${args.topic.index - 1}.statements`;
 
@@ -47,4 +47,5 @@ class AddPosition extends patron.Command {
     return msg.createReply(`you've successfully added a statement ${args.position.boldify()} ${args.topic.topic.boldify()}.`);
   }
 }
+
 module.exports = new AddPosition();

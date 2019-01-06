@@ -24,10 +24,10 @@ class Modules extends patron.Command {
       for (let i = 0; i < msg.client.registry.groups.length; i++)
         message += `${msg.client.registry.groups[i].name.upperFirstChar()}, `;
 
-      return msg.channel.createMessage(`${message.substring(0, message.length - 2)}.`, {title: "These are the current modules in 🐟🐟:"});
+      return msg.channel.createMessage(`${message.substring(0, message.length - 2)}.`, {title: "Modules"});
     }
 
-    const lowerInput = args.module.tolowerString();
+    const lowerInput = args.module.toLowerCase();
     const module = msg.client.registry.groups.find(x => x.name === lowerInput);
 
     if (!module)
@@ -41,4 +41,5 @@ class Modules extends patron.Command {
     return msg.channel.createMessage(`${message.substring(0, message.length - 2)}.`, {title: module.name.upperFirstChar()});
   }
 }
+
 module.exports = new Modules();

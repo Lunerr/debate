@@ -7,4 +7,5 @@ class PromiseUtil {
     });
   }
 }
+
 module.exports = PromiseUtil;

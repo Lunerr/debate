@@ -44,4 +44,5 @@ class Statements extends patron.Command {
     return msg.createReply(`you have been DMed with all ${args.topic.topic} statements.`);
   }
 }
+
 module.exports = new Statements();

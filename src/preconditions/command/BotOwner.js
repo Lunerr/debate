@@ -13,4 +13,5 @@ class BotOwner extends patron.Precondition {
     return patron.PreconditionResult.fromError(command, "you must be a bot owner in order to use this command.");
   }
 }
+
 module.exports = new BotOwner();

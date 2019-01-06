@@ -40,4 +40,5 @@ class Eval extends patron.Command {
     }
   }
 }
+
 module.exports = new Eval();

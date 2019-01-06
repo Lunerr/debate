@@ -8,4 +8,5 @@ class SystemGroup extends patron.Group {
     });
   }
 }
+
 module.exports = new SystemGroup();

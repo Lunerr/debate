@@ -3,4 +3,5 @@ class PushUpdate {
     this.$push = {[property]: value};
   }
 }
+
 module.exports = PushUpdate;

@@ -37,4 +37,5 @@ class Topics extends patron.Command {
     return msg.createReply(`you have been DMed with all ${msg.guild.name} topics.`);
   }
 }
+
 module.exports = new Topics();

@@ -8,4 +8,5 @@ class General extends patron.Group {
     });
   }
 }
+
 module.exports = new General();
