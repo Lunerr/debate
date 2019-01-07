@@ -45,7 +45,7 @@ module.exports = async client => {
       if (messagesArray[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
         continue;
 
-      if (messagesArray.every(x => debates.has(x)))
+      if (messagesArray.some(x => debates.has(x)))
         continue;
 
       const topics = Random.shuffle(guilds[i].topics);
