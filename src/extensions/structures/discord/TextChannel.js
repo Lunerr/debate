@@ -36,6 +36,18 @@ Structures.extend("TextChannel", T => {
 
       return this.tryCreateMessage(description, options);
     }
+
+    async trySend(description, options = {}) {
+      const permissions = this.permissionsFor(this.guild.me);
+
+      if (permissions.has("SEND_MESSAGES")) {
+        await this.send(description, options);
+
+        return true;
+      }
+
+      return false;
+    }
   }
 
   return TextChannel;

@@ -39,13 +39,12 @@ module.exports = async client => {
       if (!channel)
         continue;
 
-      const messages = await channel.messages.fetch({limit: Constants.data.statements.previousMessagesCount});
-      const messagesArray = messages.array();
+      const messages = (await channel.messages.fetch({limit: Constants.data.statements.previousMessagesCount})).array();
 
-      if (messagesArray[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
+      if (messages[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
         continue;
 
-      if (messagesArray.some(x => debates.has(x)))
+      if (messages.some(msg => debates.has(msg.id)))
         continue;
 
       const topics = Random.shuffle(guilds[i].topics);
@@ -78,12 +77,12 @@ module.exports = async client => {
           else if ((statement.position === "against" && content === "agree") || (statement.position === "for" && content === "disagree"))
             opponents += getOpponents(client, topics[j].for);
 
-          await channel.createMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n`
+          await channel.tryCreateMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n__**Rules of rationality:**__\n`
             + "**1.** No ad hominems. Don't attack the person, attack the point.\n"
             + "**2.** No straw men. Don't misrepresent someone's argument to then knock down the straw man. \"So you're saying...\" is typically a straw man argument.\n"
             + "**3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.\n"
             + "**May the most reasonable man win!**");
-          await channel.send(`${reply.first().author} VS ${opponents.substring(0, opponents.length - 2)}!`);
+          await channel.trySend(`${reply.first().author} VS ${opponents.substring(0, opponents.length - 2)}!`);
         } else {
           debateMessage.delete();
         }
