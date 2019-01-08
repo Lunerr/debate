@@ -5,7 +5,7 @@ class Against extends patron.Command {
     super({
       names: ["against", "disagree"],
       groupName: "general",
-      description: "Go against a topic.",
+      description: "Set yourself to be against a certain idea.",
       args: [new patron.Argument({
         name: "topic",
         key: "topic",
@@ -18,7 +18,7 @@ class Against extends patron.Command {
 
   async run(msg, args) {
     if (args.topic.against.includes(msg.author.id))
-      return msg.createErrorReply("you are already going against this topic.");
+      return msg.createErrorReply("you are already against this topic.");
 
     let topic = "";
 

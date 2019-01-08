@@ -61,5 +61,5 @@ client.on("message", async msg => {
     return msg.tryCreateErrorReply(message);
   }
 
-  return Logger.log(`Successful command result: ${msg.id} User: ${msg.author.tag} User ID: ${msg.author.id} Guild: ${msg.guild.name} Content ${msg.cleanContent}`, "DEBUG");
+  return Logger.log(`Successful command result: ${msg.id} User: ${msg.author.tag} User ID: ${msg.author.id} ${msg.guild ? `Guild: ${msg.guild.name} ` : ""}Content ${msg.cleanContent}`, "DEBUG");
 });

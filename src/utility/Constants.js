@@ -16,6 +16,8 @@ class Constants {
         error: [255, 0, 0]
       },
 
+      discord: {FieldValueCharLimit: 1024},
+
       links: {
         botInvite: "https://discordapp.com/oauth2/authorize?client_id=531143043697475594&scope=bot&permissions=8",
         serverInvite: "https://discord.gg/DpaZNEQ"

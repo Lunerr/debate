@@ -5,7 +5,7 @@ class For extends patron.Command {
     super({
       names: ["for", "agree"],
       groupName: "general",
-      description: "Go for a topic.",
+      description: "Set yourself to be for a certain idea.",
       args: [new patron.Argument({
         name: "topic",
         key: "topic",
@@ -18,7 +18,7 @@ class For extends patron.Command {
 
   async run(msg, args) {
     if (args.topic.for.includes(msg.author.id))
-      return msg.createErrorReply("you are already going for this topic.");
+      return msg.createErrorReply("you are already for this topic.");
 
     let topic = "";
 

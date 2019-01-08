@@ -4,7 +4,7 @@ class AddPosition extends patron.Command {
   constructor() {
     super({
       names: ["addposition", "setposition", "addstatement", "setstatement"],
-      groupName: "general",
+      groupName: "administrators",
       description: "Add a position to a topic.",
       args: [new patron.Argument({
         name: "topic",
@@ -29,9 +29,6 @@ class AddPosition extends patron.Command {
   }
 
   async run(msg, args) {
-    if (!msg.member.hasPermission("MANAGE_MESSAGES"))
-      return msg.createErrorReply("you must be a mod to use this cmd.");
-
     if (args.position.toLowerCase() !== "for" && args.position.toLowerCase() !== "against")
       return msg.createErrorReply("this is an invalid position.");
 

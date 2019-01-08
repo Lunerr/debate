@@ -4,7 +4,7 @@ class RemovePosition extends patron.Command {
   constructor() {
     super({
       names: ["removeposition", "deleteposition", "removestatement", "deletestatement"],
-      groupName: "general",
+      groupName: "administrators",
       description: "Remove a position to a topic.",
       args: [new patron.Argument({
         name: "topic",
@@ -23,9 +23,6 @@ class RemovePosition extends patron.Command {
   }
 
   async run(msg, args) {
-    if (!msg.member.hasPermission("MANAGE_MESSAGES"))
-      return msg.createErrorReply("you must be a mod to use this cmd.");
-
     const topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.statements`;
 
     await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$pull: {[topic]: args.statement}});

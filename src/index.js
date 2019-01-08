@@ -4,6 +4,7 @@ const Logger = require("./utility/Logger.js");
 const intervalService = require("./services/intervalService.js");
 
 require("dotenv").config();
+
 (async () => {
   await require("./extensions");
 
@@ -14,4 +15,5 @@ require("dotenv").config();
   await client.db.connect(process.env.MONGO_DB_URL);
   await client.login(process.env.BOT_TOKEN);
 })().catch(e => Logger.handleError(e));
+
 process.on("unhandledRejection", e => Logger.handleError(e));

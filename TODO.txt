@@ -6,13 +6,9 @@ Arrow function used ambiguously with a conditional expression  no-confusing-arro
 Use the rest parameters instead of 'arguments'                 prefer-rest-params
 Unexpected mix of '*' and '+'  no-mixed-operators
 
-disable dm notifs
-Debate info cmd
-proper ;cmds
+add/disable dm notifs
 subscribe/ideologies
-proper help message
 dm on join
 fix indexes
-precondition for mod
 type reader for position
 don't pass around the client, just require it everywhere???

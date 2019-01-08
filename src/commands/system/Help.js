@@ -4,32 +4,38 @@ const Constants = require("../../utility/Constants.js");
 class Help extends patron.Command {
   constructor() {
     super({
-      names: ["help",
-        "commands",
-        "command",
-        "cmd",
-        "cmds",
-        "support",
-        "docs"],
+      names: ["help", "command", "cmd"],
       groupName: "system",
-      description: "All command information.",
+      description: "Information about the bot.",
       usableContexts: [patron.Context.DM, patron.Context.Guild],
       args: [new patron.Argument({
         name: "command",
         key: "command",
         type: "string",
         defaultValue: "",
-        example: "money"
+        example: "topic"
       })]
     });
   }
 
   async run(msg, args) {
     if (String.isNullOrWhiteSpace(args.command)) {
-      await msg.author.DM(`${msg.client.user.username} is **THE** cleanest bot around, and you can have it in **YOUR** server simply by clicking here: ${Constants.data.links.botInvite}.\n\nFor all information about a module and their commands do \`${Constants.data.misc.prefix}module [module]\`.\n\nThe \`${Constants.data.misc.prefix}help <command>\` command may be used for view the usage and an example of any command.\n\nIf you have **ANY** questions, you may join the **Official 🐟🐟 Discord Server:** ${Constants.data.links.serverInvite} for instant support along with a great community.`);
+      await msg.author.DM(`The best ideas naturally rise to the top when free speech and rational discussion are promoted. This bot evolves around debate. We need to know what **YOU** think in order to promote debates.
+
+In order to allow ${msg.client.user.username} to pick people with differing opinions, please enter in one of the following commands __in the server__:
+- \`;subscribe leftist\`
+- \`;subscribe conservative\`
+- \`;subscribe libertarian\`
+      
+This will automatically pick your positions on a wide range of topics. You can individually pick your positions by using: 
+- \`;topics\`
+- \`;for <topic>\`
+- \`;against <topic>\`.
+      
+You may use \`;commands\` to view all commands.`, {title: msg.client.user.username});
 
       if (msg.channel.type !== "dm")
-        return msg.createReply("you have been DMed with all the command information!");
+        return msg.createReply(`you have been DMed with information about ${msg.client.user.username}.`);
     } else {
       args.command = args.command.startsWith(Constants.data.misc.prefix) ? args.command.slice(Constants.data.misc.prefix.length) : args.command;
 

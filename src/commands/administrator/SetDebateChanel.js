@@ -4,7 +4,7 @@ class SetDebateChannel extends patron.Command {
   constructor() {
     super({
       names: ["setdebatechannel", "setdebate"],
-      groupName: "general",
+      groupName: "administrators",
       description: "Sets the debate channel.",
       args: [new patron.Argument({
         name: "channel",
