@@ -1,12 +1,12 @@
 const patron = require("patron.js");
 const Ideology = require("../../structures/Ideology.js");
 
-class AddTopic extends patron.Command {
+class AddIdeology extends patron.Command {
   constructor() {
     super({
-      names: ["addtopic", "createtopic", "adddebate", "createdebate"],
+      names: ["addideology"],
       groupName: "administrators",
-      description: "Add a topic to debate.",
+      description: "Add an ideology.",
       args: [new patron.Argument({
         name: "ideology",
         key: "ideology",
@@ -27,4 +27,4 @@ class AddTopic extends patron.Command {
   }
 }
 
-module.exports = new AddTopic();
+module.exports = new AddIdeology();
