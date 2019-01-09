@@ -1,5 +1,5 @@
 const patron = require("patron.js");
-const Debate = require("../../structures/debate.js");
+const Topic = require("../../structures/Topic.js");
 
 class AddTopic extends patron.Command {
   constructor() {
@@ -11,17 +11,17 @@ class AddTopic extends patron.Command {
         name: "topic",
         key: "topic",
         type: "string",
-        example: "\"is john gay\"",
+        example: "Socialism",
         remainder: true
       })]
     });
   }
 
   async run(msg, args) {
-    if (msg.dbGuild.topics.find(x => x.topic.toLowerCase() === args.topic.toLowerCase()))
-      return msg.createErrorReply("there's already a debate with this topic.");
+    if (msg.dbGuild.topics.some(x => x.topic.toLowerCase() === args.topic.toLowerCase()))
+      return msg.createErrorReply("there's already a topic by this name.");
 
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {topics: new Debate(args.topic)}});
+    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {topics: new Topic(args.topic)}});
 
     return msg.createReply(`you've successfully created the topic ${args.topic.boldify()}.`);
   }

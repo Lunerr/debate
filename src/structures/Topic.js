@@ -1,4 +1,4 @@
-class Debate {
+class Topic {
   constructor(topic) {
     this.topic = topic;
     this.statements = [];
@@ -7,4 +7,4 @@ class Debate {
   }
 }
 
-module.exports = Debate;
+module.exports = Topic;

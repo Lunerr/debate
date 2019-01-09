@@ -12,3 +12,5 @@ dm on join
 fix indexes
 type reader for position
 don't pass around the client, just require it everywhere???
+better way to push to an array in mongodb??
+move structures to Model??
