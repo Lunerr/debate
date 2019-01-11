@@ -10,7 +10,7 @@ class Ideology extends patron.Command {
         name: "ideology",
         key: "ideology",
         type: "ideology",
-        example: "Leftism",
+        example: "Conservative",
         remainder: true
       })]
     });

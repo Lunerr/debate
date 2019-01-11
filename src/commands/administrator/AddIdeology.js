@@ -10,7 +10,7 @@ class AddIdeology extends patron.Command {
         name: "ideology",
         key: "ideology",
         type: "string",
-        example: "Leftism",
+        example: "Conservative",
         remainder: true
       })]
     });

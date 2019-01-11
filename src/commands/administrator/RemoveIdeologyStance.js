@@ -10,7 +10,7 @@ class RemoveIdeologyStance extends patron.Command {
         name: "ideology",
         key: "ideology",
         type: "ideology",
-        example: "Leftism"
+        example: "Conservative"
       }),
       new patron.Argument({
         name: "topic",
