@@ -1,5 +1,5 @@
 const patron = require("patron.js");
-const Constants = require("../utility/Constants.js");
+const StringUtil = require("../utility/StringUtil.js");
 
 class StatementTypeReader extends patron.TypeReader {
   constructor() {
@@ -7,7 +7,7 @@ class StatementTypeReader extends patron.TypeReader {
   }
 
   async read(command, message, argument, args, input) {
-    const cleaned = input.toLowerCase().replace(Constants.regexes.monogoDbField, "");
+    const cleaned = StringUtil.mongoFieldIn(input.toLowerCase());
     const statement = Object.keys(args.topic.statements).find(x => x.toLowerCase() === cleaned);
 
     if (statement)

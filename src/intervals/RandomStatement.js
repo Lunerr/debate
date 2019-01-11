@@ -1,6 +1,7 @@
 const Constants = require("../utility/Constants.js");
 const Random = require("../utility/Random.js");
 const debates = require("../singletons/debates.js");
+const StringUtil = require("../utility/StringUtil.js");
 
 function getOpponents(client, ids) {
   let res = "";
@@ -89,7 +90,7 @@ module.exports = async client => {
           await channel.tryCreateMessage(`**${topic.name} Debate**
           
 __STATEMENT:__
-${`${statement}.`.codeBlock()}
+${StringUtil.mongoFieldOut(statement).codeBlock()}
 __**Rules of rationality:**__
 
 **1.** No ad hominems. Don't attack the person, attack the point.

@@ -62,8 +62,7 @@ class Constants {
       capitalize: /\w\S*/g,
       escape: /[-[\]{}()*+?.,\\/^$|#\s]/g,
       prefix: /^;/,
-      newline: /\r?\n/,
-      monogoDbField: /\$|\./g
+      newline: /\r?\n/
     };
   }
 }

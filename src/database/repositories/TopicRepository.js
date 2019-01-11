@@ -1,6 +1,7 @@
 const BaseRepository = require("./BaseRepository.js");
 const Topic = require("../models/Topic.js");
 const TopicQuery = require("../queries/TopicQuery.js");
+const StringUtil = require("../../utility/StringUtil.js");
 
 class TopicRepository extends BaseRepository {
   any(guildId, name) {
@@ -24,11 +25,11 @@ class TopicRepository extends BaseRepository {
   }
 
   setStatement(guildId, name, statement, stance) {
-    return this.updateOne(new TopicQuery(guildId, name), {$set: {[`statements.${statement}`]: stance}});
+    return this.updateOne(new TopicQuery(guildId, name), {$set: {[`statements.${StringUtil.mongoFieldIn(statement)}`]: stance}});
   }
 
   deleteStatement(guildId, name, statement) {
-    return this.updateOne(new TopicQuery(guildId, name), {$unset: {[`statements.${statement}`]: ""}});
+    return this.updateOne(new TopicQuery(guildId, name), {$unset: {[`statements.${StringUtil.mongoFieldIn(statement)}`]: ""}});
   }
 }
 
