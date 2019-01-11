@@ -20,19 +20,7 @@ class Help extends patron.Command {
 
   async run(msg, args) {
     if (String.isNullOrWhiteSpace(args.command)) {
-      await msg.author.DM(`The best ideas naturally rise to the top when free speech and rational discussion are promoted. This bot evolves around debate. We need to know what **YOU** think in order to promote debates.
-
-In order to allow ${msg.client.user.username} to pick people with differing opinions, please enter in one of the following commands __in the server__:
-- \`;subscribe leftist\`
-- \`;subscribe conservative\`
-- \`;subscribe libertarian\`
-      
-This will automatically pick your positions on a wide range of topics. You can individually pick your positions by using: 
-- \`;topics\`
-- \`;for <topic>\`
-- \`;against <topic>\`.
-      
-You may use \`;commands\` to view all commands.`, {title: msg.client.user.username});
+      await msg.author.DM(Constants.messages.info, {title: msg.client.user.username});
 
       if (msg.channel.type !== "dm")
         return msg.createReply(`you have been DMed with information about ${msg.client.user.username}.`);
