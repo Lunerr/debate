@@ -22,7 +22,7 @@ Structures.extend("Message", M => {
 
     sendEmbed(commandEmbed, options = {}) {
       const embed = commandEmbed
-        .setColor(options.color ? options.color : Random.arrayElement(Constants.data.colors.defaults));
+        .setColor(options.color ? options.color : Random.arrayElement(Constants.colors.defaults));
 
       return this.channel.send({embed});
     }

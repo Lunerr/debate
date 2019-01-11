@@ -7,7 +7,7 @@ function getOpponents(client, ids) {
   let count = 0;
 
   for (const id of Random.shuffle(ids)) {
-    if (count > Constants.data.statements.maxOpponents)
+    if (count > Constants.statements.maxOpponents)
       break;
 
     const user = client.users.get(id);
@@ -23,64 +23,73 @@ function getOpponents(client, ids) {
 
 module.exports = async client => {
   client.setInterval(async () => {
-    const guilds = await client.db.guildRepo.findMany();
+    const dbGuilds = await client.db.guildRepo.findMany();
 
-    for (let i = 0; i < guilds.length; i++) {
-      if (guilds[i].topics.length <= 0)
+    for (const dbGuild of dbGuilds) {
+      let topics = await client.db.topicRepo.findMany({guildId: dbGuild.guildId});
+
+      if (topics.length <= 0)
         continue;
 
-      const guild = await client.guilds.get(guilds[i].guildId);
+      const guild = await client.guilds.get(dbGuild.guildId);
 
       if (!guild)
         continue;
 
-      const channel = await guild.channels.get(guilds[i].debateChannel);
+      const channel = await guild.channels.get(dbGuild.debateChannel);
 
       if (!channel)
         continue;
 
-      const messages = (await channel.messages.fetch({limit: Constants.data.statements.previousMessagesCount})).array();
+      const messages = (await channel.messages.fetch({limit: Constants.statements.previousMessagesCount})).array();
 
-      if (messages[0].createdTimestamp + Constants.data.statements.lastMessageAge > Date.now())
+      if (messages[0].createdTimestamp + Constants.statements.lastMessageAge > Date.now())
         continue;
 
       if (messages.some(msg => debates.has(msg.id)))
         continue;
 
-      const topics = Random.shuffle(guilds[i].topics);
+      topics = Random.shuffle(topics);
 
-      for (let j = 0; j < topics.length; j++) {
+      for (const topic of topics) {
         const anyOnline = id => {
           const user = client.users.get(id);
           return user && user.presence.status !== "offline";
         };
 
-        if (!topics[j].for.some(anyOnline) || !topics[j].against.some(anyOnline) || topics[j].statements.length === 0)
+        const stanceIds = Object.keys(topic.stances);
+        const forIds = stanceIds.filter(id => topic.stances[id] === "for");
+        const againstIds = stanceIds.filter(id => topic.stances[id] === "against");
+        const statements = Object.keys(topic.statements);
+
+        if (!forIds.some(anyOnline) || !againstIds.some(anyOnline) || statements.length === 0)
           continue;
 
-        const statement = Random.arrayElement(topics[j].statements);
-        const debateMessage = await channel.createMessage(`**${topics[j].topic} Debate**\n\n__STATEMENT:__\n${statement.statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
+        const statement = Random.arrayElement(statements);
+        const debateMessage = await channel.createMessage(`**${topic.name} Debate**\n\n__STATEMENT:__\n${statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
           {footer: {text: "Up to 3 people with differing opinions will be selected to debate you."}});
 
         debates.set(debateMessage.id, Date.now());
 
         const reply = await channel.awaitMessages(m => m.content.toLowerCase() === "agree" || m.content.toLowerCase() === "disagree", {
-          max: 1, time: Constants.data.statements.replyWait
+          max: 1, time: Constants.statements.replyWait
         });
 
         if (reply.size >= 1) {
-          const content = reply.first().content.toLowerCase();
+          const stance = topic.statements[statement];
+          const first = reply.first();
+          const content = first.content.toLowerCase();
           let opponents = "";
 
-          if ((statement.position === "for" && content === "agree") || (statement.position === "against" && content === "disagree"))
-            opponents += getOpponents(client, topics[j].against);
-          else if ((statement.position === "against" && content === "agree") || (statement.position === "for" && content === "disagree"))
-            opponents += getOpponents(client, topics[j].for);
+          if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree"))
+            opponents += getOpponents(client, againstIds);
+          else
+            opponents += getOpponents(client, forIds);
 
-          await channel.tryCreateMessage(`**${topics[j].topic} Debate**
+          await channel.tryCreateMessage(`**${topic.name} Debate**
           
 __STATEMENT:__
-${statement.statement.codeBlock()}
+${`${statement}.`.codeBlock()}
 __**Rules of rationality:**__
 
 **1.** No ad hominems. Don't attack the person, attack the point.
@@ -90,7 +99,7 @@ __**Rules of rationality:**__
 **3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.
 
 **May the best man win!**`);
-          await channel.trySend(`${reply.first().author} VS ${opponents.slice(0, -2)}!`);
+          await channel.trySend(`${first.author} VS ${opponents.slice(0, -2)}!`);
         } else {
           debateMessage.delete();
         }

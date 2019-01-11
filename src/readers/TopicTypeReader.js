@@ -6,7 +6,7 @@ class TopicTypeReader extends patron.TypeReader {
   }
 
   async read(command, message, argument, args, input) {
-    const topic = await message.dbGuild.topics.find(x => x.topic.toLowerCase() === input.toLowerCase());
+    const topic = await message.client.db.topicRepo.get(message.guild.id, input);
 
     if (topic)
       return patron.TypeReaderResult.fromSuccess(topic);

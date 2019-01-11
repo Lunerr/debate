@@ -7,7 +7,7 @@ class BotOwner extends patron.Precondition {
   }
 
   async run(command, msg) {
-    if (Constants.data.misc.ownerIds.includes(msg.author.id))
+    if (Constants.misc.ownerIds.includes(msg.author.id))
       return patron.PreconditionResult.fromSuccess();
 
     return patron.PreconditionResult.fromError(command, "you must be a bot owner in order to use this command.");

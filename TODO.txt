@@ -7,10 +7,9 @@ Use the rest parameters instead of 'arguments'                 prefer-rest-param
 Unexpected mix of '*' and '+'  no-mixed-operators
 
 add/disable dm notifs
-subscribe/ideologies
-dm on join
-fix indexes
-type reader for position
+dm message on join
 don't pass around the client, just require it everywhere???
-better way to push to an array in mongodb??
-move structures to Model??
+add #debates channel to the help/join message
+replace all semicolons with proper constant
+make topic/ideology additions atomic (no possibility for duplicate, maybe multi indexes???)
+SHORTER METHODS!!!

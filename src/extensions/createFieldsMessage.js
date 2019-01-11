@@ -4,7 +4,7 @@ const Constants = require("../utility/Constants.js");
 
 function createFieldsMessage(channel, fieldsAndValues, inline = true, color = null) {
   const embed = new MessageEmbed()
-    .setColor(color ? color : Random.arrayElement(Constants.data.colors.defaults));
+    .setColor(color ? color : Random.arrayElement(Constants.colors.defaults));
 
   for (let i = 0; i < fieldsAndValues.length - 1; i++) {
     if (i.isEven())

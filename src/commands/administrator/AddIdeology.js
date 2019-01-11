@@ -1,5 +1,4 @@
 const patron = require("patron.js");
-const Ideology = require("../../structures/Ideology.js");
 
 class AddIdeology extends patron.Command {
   constructor() {
@@ -18,12 +17,12 @@ class AddIdeology extends patron.Command {
   }
 
   async run(msg, args) {
-    if (msg.dbGuild.ideologies.some(x => x.name.toLowerCase() === args.ideology.toLowerCase()))
+    if (await msg.client.db.ideologyRepo.any(msg.guild.id, args.ideology))
       return msg.createErrorReply("there's already an ideology by this name.");
 
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {ideologies: new Ideology(args.ideology)}});
+    await msg.client.db.ideologyRepo.insert(msg.guild.id, args.ideology);
 
-    return msg.createReply(`you've successfully created the ideology ${args.ideology.boldify()}.`);
+    return msg.createReply(`you have successfully created the ideology ${args.ideology.boldify()}.`);
   }
 }
 

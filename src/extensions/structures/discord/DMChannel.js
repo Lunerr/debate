@@ -10,7 +10,7 @@ Structures.extend("DMChannel", DMC => {
     }
 
     createErrorMessage(description, options = {}) {
-      options.color = Constants.data.colors.error;
+      options.color = Constants.colors.error;
 
       return this.createMessage(description, options);
     }
@@ -30,7 +30,7 @@ Structures.extend("DMChannel", DMC => {
     }
 
     tryCreateErrorMessage(description, options = {}) {
-      options.color = Constants.data.colors.error;
+      options.color = Constants.colors.error;
 
       return this.tryCreateMessage(description, options);
     }

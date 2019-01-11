@@ -1,5 +1,4 @@
 const patron = require("patron.js");
-const Topic = require("../../structures/Topic.js");
 
 class AddTopic extends patron.Command {
   constructor() {
@@ -18,12 +17,12 @@ class AddTopic extends patron.Command {
   }
 
   async run(msg, args) {
-    if (msg.dbGuild.topics.some(x => x.topic.toLowerCase() === args.topic.toLowerCase()))
+    if (await msg.client.db.topicRepo.any(msg.guild.id, args.topic))
       return msg.createErrorReply("there's already a topic by this name.");
 
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$push: {topics: new Topic(args.topic)}});
+    await msg.client.db.topicRepo.insert(msg.guild.id, args.topic);
 
-    return msg.createReply(`you've successfully created the topic ${args.topic.boldify()}.`);
+    return msg.createReply(`you have successfully created the topic ${args.topic.boldify()}.`);
   }
 }
 

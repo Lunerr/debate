@@ -12,7 +12,7 @@ class Invite extends patron.Command {
   }
 
   run(msg) {
-    return msg.createReply(`you may add cleanest bot around by clicking here: ${Constants.data.links.botInvite}.\n\nIf you have any questions or concerns, you may always join the **Official ${msg.client.user.username} Support Server:** ${Constants.data.links.serverInvite}`);
+    return msg.createReply(`you may add cleanest bot around by clicking here: ${Constants.links.botInvite}.\n\nIf you have any questions or concerns, you may always join the **Official ${msg.client.user.username} Support Server:** ${Constants.links.serverInvite}`);
   }
 }
 

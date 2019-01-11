@@ -16,7 +16,7 @@ class Commands extends patron.Command {
 
     for (const group of msg.client.registry.groups) {
       elems.push(group.name.upperFirstChar());
-      elems.push(group.commands.map(x => `${Constants.data.misc.prefix}${x.names[0]}`).join(", "));
+      elems.push(group.commands.map(x => `${Constants.misc.prefix}${x.names[0]}`).join(", "));
     }
 
     return msg.channel.createFieldsMessage(elems, false);

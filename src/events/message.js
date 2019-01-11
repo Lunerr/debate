@@ -11,13 +11,10 @@ const CONTEXTS = {
 };
 
 client.on("message", async msg => {
-  if (msg.author.bot || !Constants.data.regexes.prefix.test(msg.content))
+  if (msg.author.bot || !Constants.regexes.prefix.test(msg.content))
     return;
 
-  if (msg.guild)
-    msg.dbGuild = await client.db.guildRepo.getGuild(msg.guild.id);
-
-  const result = await handler.run(msg, Constants.data.misc.prefix.length);
+  const result = await handler.run(msg, Constants.misc.prefix.length);
 
   if (!result.success) {
     let message;
@@ -47,10 +44,10 @@ client.on("message", async msg => {
 
       break;
     case patron.CommandError.InvalidContext:
-      message = `this command can't be used in ${CONTEXTS[result.context] === "server" ? "a " : ""}${CONTEXTS[result.context]}`;
+      message = `this command can't be used in ${CONTEXTS[result.context] === "server" ? "a " : ""}${CONTEXTS[result.context]}.`;
       break;
     case patron.CommandError.InvalidArgCount:
-      message = `you are incorrectly using this command.\n**Usage:** \`${Constants.data.misc.prefix}${result.command.getUsage()}\`\n**Example:** \`${Constants.data.misc.prefix}${result.command.getExample()}\``;
+      message = `you are incorrectly using this command.\n**Usage:** \`${Constants.misc.prefix}${result.command.getUsage()}\`\n**Example:** \`${Constants.misc.prefix}${result.command.getExample()}\``;
       break;
     default:
       message = !result.errorReason.startsWith("I") ? result.errorReason[0].toLowerCase() + result.errorReason.slice(1) : result.errorReason;

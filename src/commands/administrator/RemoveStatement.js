@@ -1,9 +1,9 @@
 const patron = require("patron.js");
 
-class RemovePosition extends patron.Command {
+class RemoveStatement extends patron.Command {
   constructor() {
     super({
-      names: ["removeposition", "deleteposition", "removestatement", "deletestatement"],
+      names: ["removestatement", "deletestatement"],
       groupName: "administrators",
       description: "Remove a position to a topic.",
       args: [new patron.Argument({
@@ -23,12 +23,10 @@ class RemovePosition extends patron.Command {
   }
 
   async run(msg, args) {
-    const topic = `topics.${msg.dbGuild.topics.indexOf(args.topic)}.statements`;
+    await msg.client.db.topicRepo.deleteStatement(msg.guild.id, args.topic.name, args.statement);
 
-    await msg.client.db.guildRepo.upsertGuild(msg.guild.id, {$pull: {[topic]: args.statement}});
-
-    return msg.createReply(`you've successfully removed statement ${args.statement.statement.boldify()} from topic ${args.topic.topic.boldify()}.`);
+    return msg.createReply("you have successfully removed this statement.");
   }
 }
 
-module.exports = new RemovePosition();
+module.exports = new RemoveStatement();

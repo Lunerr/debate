@@ -30,13 +30,13 @@ class Eval extends patron.Command {
         result = await result;
 
       if (typeof result !== "string")
-        result = util.inspect(result, {depth: 1});
+        result = util.inspect(result, {depth: 2});
 
       result = result.replace(msg.client.token, " ");
 
       return msg.channel.createFieldsMessage(["Eval", `\`\`\`js\n${args.code}\`\`\``, "Returns", `\`\`\`js\n${result}\`\`\``], false);
     } catch (err) {
-      return msg.channel.createFieldsMessage(["Eval", `\`\`\`js\n${args.code}\`\`\``, "Error", `\`\`\`js\n${err}\`\`\``], false, Constants.data.colors.error);
+      return msg.channel.createFieldsMessage(["Eval", `\`\`\`js\n${args.code}\`\`\``, "Error", `\`\`\`js\n${err}\`\`\``], false, Constants.colors.error);
     }
   }
 }

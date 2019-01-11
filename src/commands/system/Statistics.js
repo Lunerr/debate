@@ -20,8 +20,8 @@ class Statistics extends patron.Command {
     for (const guild of msg.client.guilds.values())
       users += guild.memberCount;
 
-    for (let i = 0; i < Constants.data.misc.ownerIds.length; i++)
-      authors += `${msg.client.users.get(Constants.data.misc.ownerIds[i]).tag}\n`;
+    for (let i = 0; i < Constants.misc.ownerIds.length; i++)
+      authors += `${msg.client.users.get(Constants.misc.ownerIds[i]).tag}\n`;
 
     await msg.author.DMFields(["Authors",
       authors,

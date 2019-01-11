@@ -1,12 +1,11 @@
 const patron = require("patron.js");
-const PromiseUtil = require("../../utility/PromiseUtil.js");
 
 class Statements extends patron.Command {
   constructor() {
     super({
       names: ["statements"],
       groupName: "general",
-      description: "Finds all statements on a topic.",
+      description: "Lists all the statements on a topic.",
       args: [new patron.Argument({
         name: "topic",
         key: "topic",
@@ -18,30 +17,17 @@ class Statements extends patron.Command {
   }
 
   async run(msg, args) {
-    const statements = args.topic.statements.sort((a, b) => a.index - b.index);
-    const topicNums = [20,
-      40,
-      60,
-      80,
-      100];
-    let message = "";
+    const keys = Object.keys(args.topic.statements);
 
-    if (statements.length <= 0)
-      return msg.createErrorReply(`there's currently no statements on the topic ${args.topic.topic}.`);
+    if (keys.length === 0)
+      return msg.createErrorReply(`there are currently no statements on ${args.topic.name.boldify()}.`);
 
-    for (let i = 0; i < statements.length; i++) {
-      message += `**${i + 1}.** ${statements[i].statement}\n\n`;
+    const statements = keys.sort((a, b) => a.index - b.index);
+    const description = statements.map((x, i) => `**${i + 1}.** ${x}.\n\n`).join();
 
-      if (topicNums.includes(i)) {
-        await msg.author.tryDM(message, {title: `${args.topic.topic} Statements`});
-        await PromiseUtil.delay(2000);
-        message = "";
-      }
-    }
+    await msg.author.tryDM(description, {title: `${args.topic.name} Statements`});
 
-    await msg.author.tryDM(message, {title: `${args.topic.topic} Statements`});
-
-    return msg.createReply(`you have been DMed with all ${args.topic.topic.boldify()} statements.`);
+    return msg.createReply(`you have been DMed with all ${args.topic.name.boldify()} statements.`);
   }
 }
 

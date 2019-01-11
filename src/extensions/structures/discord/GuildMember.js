@@ -30,7 +30,7 @@ Structures.extend("GuildMember", GM => {
     }
 
     DMError(description, options = {}) {
-      options.color = Constants.data.colors.error;
+      options.color = Constants.colors.error;
 
       return this.DM(description, options);
     }

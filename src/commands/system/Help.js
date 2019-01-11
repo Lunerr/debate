@@ -37,7 +37,7 @@ You may use \`;commands\` to view all commands.`, {title: msg.client.user.userna
       if (msg.channel.type !== "dm")
         return msg.createReply(`you have been DMed with information about ${msg.client.user.username}.`);
     } else {
-      args.command = args.command.startsWith(Constants.data.misc.prefix) ? args.command.slice(Constants.data.misc.prefix.length) : args.command;
+      args.command = args.command.startsWith(Constants.misc.prefix) ? args.command.slice(Constants.misc.prefix.length) : args.command;
 
       const lowerInput = args.command.toLowerCase();
       const command = msg.client.registry.commands.find(x => x.names.some(y => y === lowerInput));
@@ -45,7 +45,7 @@ You may use \`;commands\` to view all commands.`, {title: msg.client.user.userna
       if (!command)
         return msg.createErrorReply("this command does not exist.");
 
-      return msg.channel.createMessage(`**Description:** ${command.description}\n**Usage:** \`${Constants.data.misc.prefix}${command.getUsage()}\`\n**Example:** \`${Constants.data.misc.prefix}${command.getExample()}\``, {title: command.names[0].upperFirstChar()});
+      return msg.channel.createMessage(`**Description:** ${command.description}\n**Usage:** \`${Constants.misc.prefix}${command.getUsage()}\`\n**Example:** \`${Constants.misc.prefix}${command.getExample()}\``, {title: command.names[0].upperFirstChar()});
     }
   }
 }

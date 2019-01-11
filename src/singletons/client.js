@@ -21,4 +21,4 @@ class Client extends discord.Client {
   }
 }
 
-module.exports = new Client(registry, new Database(), Constants.data.misc.clientOptions);
+module.exports = new Client(registry, new Database(), Constants.misc.clientOptions);

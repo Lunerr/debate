@@ -5,5 +5,5 @@ const client = require("../singletons/client.js");
 client.on("ready", () => {
   Logger.log(`${client.user.tag} has successfully connected.`, "INFO");
 
-  return client.user.setActivity(Constants.data.misc.game);
+  return client.user.setActivity(Constants.misc.game);
 });

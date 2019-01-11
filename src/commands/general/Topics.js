@@ -1,37 +1,27 @@
 const patron = require("patron.js");
-const PromiseUtil = require("../../utility/PromiseUtil.js");
+const Constants = require("../../utility/Constants.js");
 
 class Topics extends patron.Command {
   constructor() {
     super({
       names: ["topics", "debates"],
       groupName: "general",
-      description: "Finds all topics in server."
+      description: "Lists all the debate topics."
     });
   }
 
   async run(msg) {
-    const topicNums = [20,
-      40,
-      60,
-      80,
-      100];
-    let message = "";
+    const topics = await msg.client.db.topicRepo.findMany({guildId: msg.guild.id});
 
-    if (msg.dbGuild.topics.length <= 0)
-      return msg.createErrorReply("there's currently no active topics in this server.");
+    if (topics.length === 0)
+      return msg.createErrorReply("no topics have been added yet.");
 
-    for (let i = 0; i < msg.dbGuild.topics.length; i++) {
-      message += `**${i + 1}.** ${msg.dbGuild.topics[i].topic}\n\n`;
+    let descp = `Use \`${Constants.misc.prefix}topic <name>\` for more information.\n\n`;
 
-      if (topicNums.includes(i)) {
-        await msg.author.tryDM(message, {title: "Debate Topics"});
-        await PromiseUtil.delay(2000);
-        message = "";
-      }
-    }
+    for (let i = 0; i < topics.length; i++)
+      descp += `**${i + 1}.** ${topics[i].name}\n\n`;
 
-    await msg.author.tryDM(message, {title: "Debate Topics"});
+    await msg.author.tryDM(descp, {title: "Debate Topics"});
 
     return msg.createReply(`you have been DMed with all ${msg.guild.name.boldify()} topics.`);
   }

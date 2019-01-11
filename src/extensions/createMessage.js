@@ -2,10 +2,9 @@ const {MessageEmbed} = require("discord.js");
 const Random = require("../utility/Random.js");
 const Constants = require("../utility/Constants.js");
 
-function createMessage(channel, description, options = {}) {
+function createEmbed(options) {
   const embed = new MessageEmbed()
-    .setColor(options.color ? options.color : Random.arrayElement(Constants.data.colors.defaults))
-    .setDescription(description);
+    .setColor(options.color ? options.color : Random.arrayElement(Constants.colors.defaults));
 
   if (options.title)
     embed.setTitle(options.title);
@@ -19,7 +18,24 @@ function createMessage(channel, description, options = {}) {
   if (options.timestamp)
     embed.setTimestamp();
 
-  return channel.send({embed});
+  return embed;
+}
+
+async function createMessage(channel, description, options = {}) {
+  const embed = createEmbed(options);
+  const split = description.split(Constants.regexes.newline);
+  let content = "";
+
+  for (let i = 0; i < split.length; i++) {
+    if (content.length + split[i].length > Constants.discord.DescriptionCharLimit) {
+      await channel.send({embed: embed.setDescription(content)});
+      content = "";
+    }
+
+    content += `${split[i]}\n`;
+  }
+
+  return channel.send({embed: embed.setDescription(content)});
 }
 
 module.exports = createMessage;
