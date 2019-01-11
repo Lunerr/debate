@@ -17,7 +17,7 @@ class Topic extends patron.Command {
     });
   }
 
-  getPeople(client, ids, stance) {
+  getPeople(guild, ids, stance) {
     let res = "";
     let count = 0;
 
@@ -25,9 +25,9 @@ class Topic extends patron.Command {
       if (ids[id] !== stance)
         continue;
 
-      const user = client.users.get(id);
-      if (user) {
-        res += `${user}, `;
+      const member = guild.members.get(id);
+      if (member) {
+        res += `${member}, `;
         count++;
       }
     }
@@ -41,9 +41,9 @@ class Topic extends patron.Command {
       "Statements",
       Object.keys(args.topic.statements).length.toString(),
       "People for",
-      this.getPeople(msg.client, args.topic.stances, "for"),
+      this.getPeople(msg.guild, args.topic.stances, "for"),
       "People against",
-      this.getPeople(msg.client, args.topic.stances, "against")], false);
+      this.getPeople(msg.guild, args.topic.stances, "against")], false);
   }
 }
 

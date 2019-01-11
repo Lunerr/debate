@@ -3,7 +3,7 @@ const Random = require("../utility/Random.js");
 const debates = require("../singletons/debates.js");
 const StringUtil = require("../utility/StringUtil.js");
 
-function getOpponents(client, ids) {
+function getOpponents(guild, ids) {
   let res = "";
   let count = 0;
 
@@ -11,11 +11,11 @@ function getOpponents(client, ids) {
     if (count > Constants.statements.maxOpponents)
       break;
 
-    const user = client.users.get(id);
+    const member = guild.members.get(id);
 
-    if (user && user.presence.status !== "offline") {
+    if (member && member.user.presence.status !== "offline") {
       count++;
-      res += `${user}, `;
+      res += `${member}, `;
     }
   }
 
@@ -54,8 +54,8 @@ module.exports = async client => {
 
       for (const topic of topics) {
         const anyOnline = id => {
-          const user = client.users.get(id);
-          return user && user.presence.status !== "offline";
+          const member = guild.members.get(id);
+          return member && member.user.presence.status !== "offline";
         };
 
         const stanceIds = Object.keys(topic.stances);
@@ -67,7 +67,7 @@ module.exports = async client => {
           continue;
 
         const statement = Random.arrayElement(statements);
-        const debateMessage = await channel.createMessage(`**${topic.name} Debate**\n\n__STATEMENT:__\n${statement.upperFirstChar().codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
+        const debateMessage = await channel.createMessage(`**${topic.name} debate**\n\n__STATEMENT:__\n${StringUtil.mongoFieldOut(statement).codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
           {footer: {text: "Up to 3 people with differing opinions will be selected to debate you."}});
 
         debates.set(debateMessage.id, Date.now());
@@ -83,11 +83,11 @@ module.exports = async client => {
           let opponents = "";
 
           if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree"))
-            opponents += getOpponents(client, againstIds);
+            opponents += getOpponents(guild, againstIds);
           else
-            opponents += getOpponents(client, forIds);
+            opponents += getOpponents(guild, forIds);
 
-          await channel.tryCreateMessage(`**${topic.name} Debate**
+          await channel.tryCreateMessage(`**${topic.name} debate**
           
 __STATEMENT:__
 ${StringUtil.mongoFieldOut(statement).codeBlock()}
