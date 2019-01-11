@@ -24,7 +24,7 @@ class IdeologyRepository extends BaseRepository {
   }
 
   deleteStance(guildId, name, topic) {
-    return this.updateOne(new IdeologyQuery(guildId, name), {$uset: {[`stances.${topic}`]: ""}});
+    return this.updateOne(new IdeologyQuery(guildId, name), {$unset: {[`stances.${topic}`]: ""}});
   }
 }
 
