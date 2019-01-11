@@ -24,7 +24,7 @@ class Statements extends patron.Command {
       return msg.createErrorReply(`there are currently no statements on ${args.topic.name.boldify()}.`);
 
     const statements = keys.sort((a, b) => a.index - b.index);
-    const description = statements.map((x, i) => `**${i + 1}.** ${StringUtil.mongoFieldOut(x)}\n\n`).join();
+    const description = statements.map((x, i) => `**${i + 1}.** ${StringUtil.mongoFieldOut(x)}\n\n`).join("");
 
     await msg.author.tryDM(description, {title: `${args.topic.name} Statements`});
 
