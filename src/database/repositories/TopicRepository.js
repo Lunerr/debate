@@ -24,6 +24,10 @@ class TopicRepository extends BaseRepository {
     return this.updateOne(new TopicQuery(guildId, name), {$set: {[`stances.${userId}`]: stance}});
   }
 
+  removeStance(guildId, name, userId) {
+    return this.updateOne(new TopicQuery(guildId, name), {$set: {[`stances.${userId}`]: ""}});
+  }
+
   setStatement(guildId, name, statement, stance) {
     return this.updateOne(new TopicQuery(guildId, name), {$set: {[`statements.${StringUtil.mongoFieldIn(statement)}`]: stance}});
   }

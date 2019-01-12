@@ -17,7 +17,7 @@ class Subscribe extends patron.Command {
   }
 
   async run(msg, args) {
-    await msg.createReply(`you have successfully subsribed to the ${args.ideology.name.boldify()} ideology.`);
+    await msg.createReply(`you have successfully subscribed to the ${args.ideology.name.boldify()} ideology.`);
 
     for (const topic of Object.keys(args.ideology.stances))
       await msg.client.db.topicRepo.setStance(msg.guild.id, topic, msg.author.id, args.ideology.stances[topic]);

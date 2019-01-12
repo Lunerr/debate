@@ -3,12 +3,12 @@ const Random = require("../utility/Random.js");
 const debates = require("../singletons/debates.js");
 const StringUtil = require("../utility/StringUtil.js");
 
-function getOpponents(guild, ids) {
+function getOpponents(guild, maxCount, ids) {
   let res = "";
-  let count = 0;
+  let count = maxCount;
 
   for (const id of Random.shuffle(ids)) {
-    if (count > Constants.statements.maxOpponents)
+    if (count >= Constants.statements.maxOpponents)
       break;
 
     const member = guild.members.get(id);

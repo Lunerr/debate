@@ -14,9 +14,6 @@ replace all semicolons with proper constant
 make topic/ideology additions atomic (no possibility for duplicate, maybe multi indexes???)
 SHORTER METHODS!!!
 change stance when agreeing/disagreeing AND UPDATE LOCAL stances array!!
-ping 5 users that ALSO AGREE with a stance
-;abstain <topic>
-
 
 GOODIES:
 disboard and other bumping websites
