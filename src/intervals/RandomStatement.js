@@ -68,7 +68,7 @@ module.exports = async client => {
 
         const statement = Random.arrayElement(statements);
         const debateMessage = await channel.createMessage(`**${topic.name} debate**\n\n__STATEMENT:__\n${StringUtil.mongoFieldOut(statement).codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
-          {footer: {text: `Up to ${Constants.statements.maxOpponents} people with differing opinions will be selected to debate you.`}});
+          {footer: {text: `Up to ${Constants.statements.maxDebaters} people with differing opinions will be selected to debate against you along with ${Constants.statement.maxDebaters} people to debate with you.`}});
 
         debates.set(debateMessage.id, Date.now());
 
@@ -104,7 +104,7 @@ __**Rules of rationality:**__
 **3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.
 
 **May the best man win!**`);
-          await channel.trySend(`${allies.slices(0, -2)} VS ${opponents.slice(0, -2)}!`);
+          await channel.trySend(`${allies.slice(0, -2)} VS ${opponents.slice(0, -2)}!`);
         } else {
           debateMessage.delete();
         }
