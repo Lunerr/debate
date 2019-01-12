@@ -3,7 +3,7 @@ const Random = require("../utility/Random.js");
 const debates = require("../singletons/debates.js");
 const StringUtil = require("../utility/StringUtil.js");
 
-function getDebaters(guild, maxCount, ids) {
+function getDebaters(userId, guild, maxCount, ids) {
   let res = "";
   let count = 0;
 
@@ -13,7 +13,7 @@ function getDebaters(guild, maxCount, ids) {
 
     const member = guild.members.get(id);
 
-    if (member && member.user.presence.status !== "offline") {
+    if (member && member.user.presence.status !== "offline" && member.id !== userId) {
       count++;
       res += `${member}, `;
     }
@@ -84,11 +84,11 @@ module.exports = async client => {
           let allies = `${first.author}, `;
 
           if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree")) {
-            opponents += getDebaters(guild, Constants.statements.maxDebaters, againstIds);
-            allies += getDebaters(guild, Constants.statements.maxDebaters - 1, forIds);
+            opponents += getDebaters(first.author.id, guild, Constants.statements.maxDebaters, againstIds);
+            allies += getDebaters(first.author.id, guild, Constants.statements.maxDebaters - 1, forIds);
           } else {
-            opponents += getDebaters(guild, Constants.statements.maxDebaters, forIds);
-            allies += getDebaters(guild, Constants.statements.maxDebaters - 1, againstIds);
+            opponents += getDebaters(first.author.id, guild, Constants.statements.maxDebaters, forIds);
+            allies += getDebaters(first.author.id, guild, Constants.statements.maxDebaters - 1, againstIds);
           }
 
           await channel.tryCreateMessage(`**${topic.name} debate**
