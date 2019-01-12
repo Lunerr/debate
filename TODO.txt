@@ -21,3 +21,7 @@ ping 5 users that ALSO AGREE with a stance
 GOODIES:
 disboard and other bumping websites
 fill server with EMOJIS
+
+IMPORTANT:
+fix perms
+send failure message when DM fails

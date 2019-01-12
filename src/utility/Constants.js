@@ -70,7 +70,7 @@ You may use \`;commands\` to view all commands.`};
     this.statements = {
       maxOpponents: 3,
       previousMessagesCount: 20,
-      replyWait: 60000,
+      replyWait: 120000,
       lastMessageAge: 60000
     };
 
