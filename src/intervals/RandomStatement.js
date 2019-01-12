@@ -5,10 +5,10 @@ const StringUtil = require("../utility/StringUtil.js");
 
 function getDebaters(guild, maxCount, ids) {
   let res = "";
-  let count = maxCount;
+  let count = 0;
 
   for (const id of Random.shuffle(ids)) {
-    if (count >= Constants.statements.maxOpponents)
+    if (count >= maxCount)
       break;
 
     const member = guild.members.get(id);
@@ -81,11 +81,15 @@ module.exports = async client => {
           const first = reply.first();
           const content = first.content.toLowerCase();
           let opponents = "";
+          let allies = `${first.author}, `;
 
-          if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree"))
+          if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree")) {
             opponents += getDebaters(guild, Constants.statements.maxDebaters, againstIds);
-          else
+            allies += getDebaters(guild, Constants.statements.maxDebaters - 1, forIds);
+          } else {
             opponents += getDebaters(guild, Constants.statements.maxDebaters, forIds);
+            allies += getDebaters(guild, Constants.statements.maxDebaters - 1, againstIds);
+          }
 
           await channel.tryCreateMessage(`**${topic.name} debate**
           
@@ -100,7 +104,7 @@ __**Rules of rationality:**__
 **3.** Use reasonable sources with a fair amount of citations. Some humanities paper from a disreputable university with zero citations is not a source.
 
 **May the best man win!**`);
-          await channel.trySend(`${first.author} VS ${opponents.slice(0, -2)}!`);
+          await channel.trySend(`${allies.slices(0, -2)} VS ${opponents.slice(0, -2)}!`);
         } else {
           debateMessage.delete();
         }
