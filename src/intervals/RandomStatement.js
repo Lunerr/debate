@@ -68,7 +68,7 @@ module.exports = async client => {
 
         const statement = Random.arrayElement(statements);
         const debateMessage = await channel.createMessage(`**${topic.name} debate**\n\n__STATEMENT:__\n${StringUtil.mongoFieldOut(statement).codeBlock()}\n**__REPLY__** with \`agree\` or \`disagree\` to debate!`,
-          {footer: {text: `Up to ${Constants.statements.maxDebaters} people with differing opinions will be selected to debate against you along with ${Constants.statement.maxDebaters} people to debate with you.`}});
+          {footer: {text: `Up to ${Constants.statements.maxDebaters} people with differing opinions will be selected to debate against you along with ${Constants.statements.maxDebaters} people to debate with you.`}});
 
         debates.set(debateMessage.id, Date.now());
 
