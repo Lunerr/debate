@@ -3,7 +3,7 @@ const Random = require("../utility/Random.js");
 const debates = require("../singletons/debates.js");
 const StringUtil = require("../utility/StringUtil.js");
 
-function getOpponents(guild, maxCount, ids) {
+function getDebaters(guild, maxCount, ids) {
   let res = "";
   let count = maxCount;
 
@@ -83,9 +83,9 @@ module.exports = async client => {
           let opponents = "";
 
           if ((stance === "for" && content === "agree") || (stance === "against" && content === "disagree"))
-            opponents += getOpponents(guild, againstIds);
+            opponents += getDebaters(guild, Constants.statements.maxDebaters, againstIds);
           else
-            opponents += getOpponents(guild, forIds);
+            opponents += getDebaters(guild, Constants.statements.maxDebaters, forIds);
 
           await channel.tryCreateMessage(`**${topic.name} debate**
           

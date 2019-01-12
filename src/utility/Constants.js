@@ -68,7 +68,7 @@ You may use \`;commands\` to view all commands.`};
     };
 
     this.statements = {
-      maxOpponents: 3,
+      maxDebaters: 5,
       previousMessagesCount: 20,
       replyWait: 120000,
       lastMessageAge: 60000
