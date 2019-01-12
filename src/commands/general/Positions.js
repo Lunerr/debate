@@ -21,12 +21,12 @@ class Positions extends patron.Command {
 
   async getTopics(guildId, userId, stance) {
     let res = "";
-    let topics = await client.db.topicRepo.findMany({guildId: guildId})
-    topics = topics.filter(topic => Object.keys(topic.stances).includes(userId)
-     && Object.values(topic.stances).includes(stance));
+    let topics = await client.db.topicRepo.findMany({guildId: guildId});
+    topics = topics.filter(topic => Object.keys(topic.stances).includes(userId));
 
     for (let i = 0; i < topics.length; i++) {
-      res += `${topics[i].name}, `;
+      if (topics[i].stances[userId] === stance)
+        res += `${topics[i].name}, `;
     }
 
     return res.length > Constants.discord.FieldValueCharLimit || res.length === 0 ? 'None' : res.slice(0, -2);;
