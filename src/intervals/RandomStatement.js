@@ -13,7 +13,7 @@ function getDebaters(userId, guild, maxCount, ids) {
 
     const member = guild.members.get(id);
 
-    if (member && member.user.presence.status !== "offline" && member.id !== userId) {
+    if (member && member.user.presence.status === "online" && member.id !== userId) {
       count++;
       res += `${member}, `;
     }
@@ -55,7 +55,7 @@ module.exports = async client => {
       for (const topic of topics) {
         const anyOnline = id => {
           const member = guild.members.get(id);
-          return member && member.user.presence.status !== "offline";
+          return member && member.user.presence.status === "online";
         };
 
         const stanceIds = Object.keys(topic.stances);
