@@ -64,7 +64,7 @@ You may use \`;commands\` to view all commands.`};
       },
       game: ";help",
       prefix: ";",
-      ownerIds: ["226736342745219072", "474210876967223296"]
+      ownerIds: ["226736342745219072", "474210876967223296", "266743271898742785"]
     };
 
     this.statements = {
